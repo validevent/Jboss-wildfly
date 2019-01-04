@@ -20,6 +20,13 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 # Expose the ports we're interested in
 EXPOSE 8080
+EXPOSE 9990
+
+# Add Deployment
+ADD ticket-monster.war /opt/jboss/wildfly/standalone/deployments/
+
+# Add Admin User
+RUN /opt/jboss/wildfly/bin/add-user.sh admin Ou812wtf --silent
 
 # Set the default command to run on boot
 # This will boot WildFly in the standalone mode and bind to all interface
