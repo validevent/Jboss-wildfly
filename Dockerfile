@@ -19,15 +19,32 @@ RUN cd $HOME \
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 # Expose the ports we're interested in
+EXPOSE 1433
+EXPOSE 3306
 EXPOSE 8080
 EXPOSE 9990
 
 # Add Deployment
 ADD ticket-monster.war /opt/jboss/wildfly/standalone/deployments/
+ADD "jar" /opt/jboss/wildfly/modules/system/layers/base/ord/hibernate/main
+ADD "modules" /opt/jboss/wildfly/modules/system/layers/base/ord/hibernate/main
+ADD "JDTCore.zip Jar" /opt/jboss/wildfly/modules/system/layers/base/org/eclipse/jdtcore/main
+ADD "JDTCore.zip module" /opt/jboss/wildfly/modules/system/layers/base/org/eclipse/jdtcore/main
+CMD mkdir /opt/jboss/wildfly/moduels/system/layers/base/com/sun/jersey/main
+ADD "Jersy Jar" /opt/jboss/wildfly/moduels/system/layers/base/com/sun/jersey/main
+ADD "Jersy Modules" /opt/jboss/wildfly/moduels/system/layers/base/com/sun/jersey/main
+ADD "Quartz Jar" /opt/jboss/wildfly/moduels/system/layers/base/org/quartz/main
+ADD "Quartz Moduel.xml" /opt/jboss/wildfly/moduels/system/layers/base/org/quartz/main
+ADD "DB Module.xml" /opt/jboss/wildfly/moduels/system/layers/base/com
+ADD "DB jar" /opt/jboss/wildfly/moduels/system/layers/base/com
+
+
 
 # Add Admin User
 RUN /opt/jboss/wildfly/bin/add-user.sh admin Ou812wtf --silent
 CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
+RUN /opt/jboss/wildfly/bin/jboss-cli.sh --connct --controller=127.0.0.1:9999
+CMD ["/opt/jboss/wildfly/bin/jboss-cli.sh", "--connect", "--controller=127.0.0.1:9999", "/subsystem=datasource/jdbc-driver=sqlserver:add(driver-name=sqlaserver,driver-module-name=com.microsoft.jdbc,driver-xa-datasource-class-name=com.microsoft.system.jdbc,driver-xa-datasource-class-name=com.microsoft.system.jdbc.cSQLServerXADataSource"]
 # Set the default command to run on boot
 # This will boot WildFly in the standalone mode and bind to all interface
 # CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
