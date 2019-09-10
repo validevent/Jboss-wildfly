@@ -1,6 +1,6 @@
 # Use latest jboss/base-jdk:8 image as the base
 FROM jboss/base-jdk:8
-
+#Testing
 # Set the WILDFLY_VERSION env variable
 ENV WILDFLY_VERSION 10.0.0.Final
 ENV WILDFLY_SHA1 c0dd7552c5207b0d116a9c25eb94d10b4f375549
