@@ -21,6 +21,7 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 # Expose the ports we're interested in
 EXPOSE 8080
 EXPOSE 9990
+EXPOSE 9999
 
 # Add Deployment
 ADD ticket-monster.war /opt/jboss/wildfly/standalone/deployments/
